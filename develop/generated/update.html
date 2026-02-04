@@ -5,19 +5,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>bodhi.update.comment &#8212; bodhi 7.2.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=71a681cb" />
-    <script src="../_static/documentation_options.js?v=9fcf24ae"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <title>bodhi.update.comment &#8212; bodhi 25.11.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=1f462c57" />
+    <script src="../_static/documentation_options.js?v=6bc665c9"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
+
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  
 
   </head><body>
   
@@ -1299,6 +1301,179 @@
 </pre></div>
 </div>
 </section>
+<section id="id3">
+<h1>bodhi.update.status.testing.koji-build-group.build.complete<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;https://bodhi.fedoraproject.org/message-schemas/v1/bodhi.update.status.testing#&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;$schema&quot;</span><span class="p">:</span> <span class="s2">&quot;http://json-schema.org/draft-04/schema#&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Schema for message sent when an update is ready for testing&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;agent&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Re-trigger request: name of requester, trigger on push: </span><span class="se">\&quot;</span><span class="s2">bodhi</span><span class="se">\&quot;</span><span class="s2">.&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;artifact&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Details about the builds to test.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Artifact type, in this case </span><span class="se">\&quot;</span><span class="s2">koji-build-group</span><span class="se">\&quot;</span><span class="s2">.&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;builds&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A list of builds included in this group&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/artifactbuild&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;builds&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;re-trigger&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;This flag is True if the message is sent to re-trigger tests&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;update&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;An update&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;alias&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The alias of the update&quot;</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;builds&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A list of builds included in this update&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="s2">&quot;#/definitions/build&quot;</span>
+                    <span class="p">}</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;release&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A release&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The name of the release e.g. F32&quot;</span>
+                        <span class="p">}</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;name&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;request&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;null&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;string&quot;</span>
+                    <span class="p">],</span>
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The request of the update, if any&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="n">null</span><span class="p">,</span>
+                        <span class="s2">&quot;testing&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;obsolete&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;unpush&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;revoke&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;stable&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The current status of the update&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;enum&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="n">null</span><span class="p">,</span>
+                        <span class="s2">&quot;pending&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;testing&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;stable&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;unpushed&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;obsolete&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;side_tag_active&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;side_tag_expired&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The user that submitted the override&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The user&#39;s account name&quot;</span>
+                        <span class="p">}</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;name&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;alias&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;builds&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;release&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;request&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;status&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;user&quot;</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;agent&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;artifact&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;update&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;artifactbuild&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Details about a build that are not in the update builds dict&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Artifact type, in this case </span><span class="se">\&quot;</span><span class="s2">koji-build</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Build ID of the koji build.&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;task_id&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Task ID of the koji build.&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="s2">&quot;null&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;integer&quot;</span>
+                    <span class="p">]</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;nvr&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Name-version-release of the artifact.&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;task_id&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;nvr&quot;</span>
+            <span class="p">]</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;build&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A build&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;nvr&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The nvr the identifies the build in koji&quot;</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;nvr&quot;</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
 <section id="bodhi-update-request-obsolete">
 <h1>bodhi.update.request.obsolete<a class="headerlink" href="#bodhi-update-request-obsolete" title="Link to this heading">¶</a></h1>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
@@ -1996,11 +2171,11 @@
           
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
 <p class="logo">
   <a href="../index.html">
-    <img class="logo" src="../_static/logo.svg" alt="Logo"/>
+    <img class="logo" src="../_static/logo.svg" alt="Logo" />
     
     <h1 class="logo logo-name">bodhi</h1>
     
@@ -2023,11 +2198,11 @@
 
 <h3>Navigation</h3>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/automatic_updates.html">Automatic Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/buildroot_overrides.html">Buildroot Overrides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/fedora-flavored-markdown.html">Fedora-Flavored Markdown</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user/testing.html">Testing updates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user/update_states.html">Update states</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../user/buildroot_overrides.html">Buildroot Overrides</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../user/automatic_updates.html">Automatic Updates</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../user/fedora-flavored-markdown.html">Fedora-Flavored Markdown</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../user/release_notes.html">Release notes</a></li>
@@ -2039,9 +2214,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../developer/index.html">Developer documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developer/releases.html">Release process</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developer/vagrant.html">Vagrant</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developer/vagrant_vscode.html">Debugging with Visual Studio Code</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../developer/virtualenv.html">Virtualenv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/bcd.html">BCD - the Bodhi Container Development environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/bcd_vscode.html">Debugging with Visual Studio Code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../developer/models.html">Database models</a></li>
 </ul>
 <ul>
@@ -2055,7 +2229,7 @@
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
@@ -2063,7 +2237,7 @@
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
 
 
@@ -2078,11 +2252,11 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2007-2023, Red Hat, Inc..
+      &#169;2007-2026, Red Hat, Inc..
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |
       <a href="../_sources/generated/update.rst.txt"

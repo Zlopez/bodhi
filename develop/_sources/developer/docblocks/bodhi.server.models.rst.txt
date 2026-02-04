@@ -4,15 +4,6 @@
 .. automodule:: bodhi.server.models
 
    
-   
-   
-
-   
-   
-   
-
-   
-   
    .. rubric:: Classes
 
    .. autosummary::
@@ -43,6 +34,7 @@
       ReleaseState
       RpmBuild
       RpmPackage
+      TZDateTime
       TestCase
       TestCaseKarma
       TestGatingStatus
@@ -54,11 +46,3 @@
       UpdateType
       User
    
-   
-
-   
-   
-   
-
-
-

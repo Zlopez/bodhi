@@ -5,20 +5,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Administration &#8212; bodhi 7.2.2 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=71a681cb" />
-    <script src="_static/documentation_options.js?v=9fcf24ae"></script>
-    <script src="_static/doctools.js?v=888ff710"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <title>Administration &#8212; bodhi 25.11.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=1f462c57" />
+    <script src="_static/documentation_options.js?v=6bc665c9"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="bodhi.server.models" href="developer/docblocks/bodhi.server.models.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
+
   
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+  
 
   </head><body>
   
@@ -107,9 +109,6 @@ use = egg:bodhi-server
 # query_wiki_test_cases = False
 # wiki_url = https://fedoraproject.org/w/api.php
 # test_case_base_url = https://fedoraproject.org/wiki/
-
-# URL of the resultsdb for integrating checks and stuff
-# resultsdb_api_url = https://taskotron.fedoraproject.org/resultsdb_api/
 
 # Set this to True to enable gating based on policies enforced by Greenwave. If you set this to
 # True, be sure to add a cron job to run the bodhi-check-policies CLI periodically.
@@ -296,19 +295,13 @@ use = egg:bodhi-server
 # admin_groups = proventesters security_respons bodhiadmin sysadmin-main
 
 # Users that we don&#39;t want to show up in the &quot;leaderboard(s)&quot;
-# stats_blacklist = bodhi anonymous autoqa taskotron
+# stats_blacklist = bodhi anonymous
 
 # A list of non-person users
-# system_users = bodhi autoqa taskotron
+# system_users = bodhi
 
 # The number of days used for calculating the &#39;top testers&#39; metric
 # top_testers_timeframe = 7
-
-# These are the default requirements that we apply to packages and updates.
-# Users have free-reign to override them for each kind of entity.  At
-# the end of the day, we only consider the requirements defined by single
-# updates themselves when gating in the backend composer process.
-# site_requirements = dist.rpmdeplint
 
 # Cache settings
 # dogpile.cache.backend = dogpile.cache.dbm
@@ -320,7 +313,10 @@ use = egg:bodhi-server
 # warm_cache_on_start = True
 
 # Exclude sending emails to these users
-# exclude_mail = autoqa taskotron
+# exclude_mail = bodhi
+
+## Home page settings
+# homepage_stats_num_users = 10
 
 ##
 ## Buildsystem settings
@@ -330,6 +326,8 @@ use = egg:bodhi-server
 # buildsystem that always does what we tell it to do.  For production, we&#39;ll
 # want to use &#39;koji&#39;.
 # buildsystem = dev
+
+# trusted_build_sources = git+https://src.fedoraproject.org/,https://src.fedoraproject.org/
 
 # The base URL to Koji, used to construct HTML links to Koji builds in the web UI
 # koji_web_url = https://koji.fedoraproject.org/koji/
@@ -375,15 +373,22 @@ use = egg:bodhi-server
 # bugtracker =
 
 # A template that Bodhi will use when commenting on Bugzilla tickets when Updates that reference
-# them are created. Positional substitution is used, and the three %%s&#39;s will be filled in with the
-# update title, the release&#39;s long name, and the URL to the update, respectively.
-# initial_bug_msg = %%s has been submitted as an update to %%s. %%s
+# them are created. These placeholders are available:
+# - {update_alias}
+# - {update_beauty_title}
+# - {update_release}
+# - {update_url}
+# initial_bug_msg = {update_alias} ({update_beauty_title}) has been submitted as an update to {update_release}.\n{update_url}
 
 # A template that Bodhi will use when commenting on Bugzilla tickets when Updates that reference
-# them are marked stable. Positional substitution is used, and the first %%s will be filled in with
-# the update title and the second will be filled in with the release&#39;s long name and the update
-# status.
-# stable_bug_msg = %%s has been pushed to the %%s repository. If problems still persist, please make note of it in this bug report.
+# them are marked stable. These placeholders are available:
+# - {update_title}
+# - {update_beauty_title}
+# - {update_alias}
+# - {repo}
+# - {install_instructions}
+# - {update_url}
+# stable_bug_msg = {update_alias} ({update_beauty_title}) has been pushed to the {repo} repository.\n. If problems still persists, please make note of it in this bug report.
 
 # The following two templates are used to comment on Bugzilla tickets. %%s will be substituted with
 # the update&#39;s URL. The first is used for all updates, unless the epel setting in defined, which
@@ -452,10 +457,10 @@ use = egg:bodhi-server
 # critpath.num_admin_approvals = 2
 
 # The net karma required to submit a critical path update to a pending release.
-# critpath.min_karma = 2
+# min_karma = 2
 
 # Allow critpath to submit for stable after 2 weeks with no negative karma
-# critpath.stable_after_days_without_negative_karma = 14
+# critpath.mandatory_days_in_testing = 14
 
 # The minimum amount of time an update must spend in testing before
 # it can reach the stable repository
@@ -475,12 +480,12 @@ fedora_epel.mandatory_days_in_testing = 14
 #f28.status = pre_beta
 #f28.pre_beta.mandatory_days_in_testing = 3
 #f28.pre_beta.critpath.num_admin_approvals = 0
-#f28.pre_beta.critpath.min_karma = 1
-#f28.pre_beta.critpath.stable_after_days_without_negative_karma = 3
+#f28.pre_beta.min_karma = 1
+#f28.pre_beta.critpath.mandatory_days_in_testing = 3
 #f28.post_beta.mandatory_days_in_testing = 7
 #f28.post_beta.critpath.num_admin_approvals = 0
-#f28.post_beta.critpath.min_karma = 2
-#f28.post_beta.critpath.stable_after_days_without_negative_karma = 5
+#f28.post_beta.min_karma = 2
+#f28.post_beta.critpath.mandatory_days_in_testing = 5
 
 
 ##
@@ -489,6 +494,14 @@ fedora_epel.mandatory_days_in_testing = 14
 
 # Maximum number of days a buildroot override may expire in, from creation time.
 # buildroot_limit = 31
+
+# You can have releases to extend its buildroot override tags from other releases.
+# When submitting a Buildroot Override for that Release, the build will be tagged
+# with the override_tag of its Release AND the override tags of the inherited releases.
+# Left Release.name goes lowercase, right Release.names must be specified exactly.
+# Below is an example, all EPEL-9 builds submitted as buildroot overrides will also
+# be tagged as EPEL-9N and EPEL-8 overrides.
+# epel-9.override-extend = EPEL-9N,EPEL-8
 
 
 ##
@@ -520,19 +533,6 @@ fedora_epel.mandatory_days_in_testing = 14
 ##
 ## Authentication &amp; Authorization
 ##
-
-# pyramid.openid settings.
-# openid.success_callback = bodhi.server.auth.utils:remember_me
-# openid.provider = https://id.fedoraproject.org/openid/
-# openid.url = https://id.fedoraproject.org/
-# openid_template = {username}.id.fedoraproject.org
-# openid.sreg_required = email nickname
-# If this is undefined, Bodhi will concatenate the groups listed in the following other settings
-# from this file: important_groups, admin_packager_groups, mandatory_packager_groups, and
-# admin_groups. You likely want this default, but can override it here if you know what you are
-# doing. You can also override it here if you do not know what you are doing, but that would be
-# inadvisable.
-# openid.groups = DEFAULT_DOCUMENTED_ABOVE
 
 # OIDC (OpenID Connect)
 oidc.fedora.client_id = oidc-client_id
@@ -566,6 +566,7 @@ debugtoolbar.hosts = 127.0.0.1 ::1
 # This must be a PostgreSQL database. You can encode a username and password in the URL. For
 # example, postgresql://username:password@hostname/database_name
 # sqlalchemy.url = postgresql://localhost/bodhi
+# sqlalchemy_extra.statement_timeout = 30000
 
 ##
 ## Templates
@@ -659,7 +660,7 @@ propagate = 1
 [handler_console]
 class = StreamHandler
 args = (sys.stderr,)
-level = NOTSET
+level = DEBUG
 formatter = generic
 
 [formatter_generic]
@@ -720,7 +721,7 @@ per process per spot in the code that logs errors:</p>
 <p>You can read more detail about the <code class="docutils literal notranslate"><span class="pre">`RateLimiter`</span></code> below:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="bodhi.server.logging.RateLimiter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">bodhi.server.logging.</span></span><span class="sig-name descname"><span class="pre">RateLimiter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3600</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bodhi/server/logging.html#RateLimiter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bodhi.server.logging.RateLimiter" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">bodhi.server.logging.</span></span><span class="sig-name descname"><span class="pre">RateLimiter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3600</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bodhi/server/logging.html#RateLimiter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bodhi.server.logging.RateLimiter" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Filter</span></code></p>
 <p>Log filter that rate-limits logs based on time.</p>
 <p>The rate limit is applied to records by filename and line number.</p>
@@ -857,11 +858,11 @@ determine the titles on associated tickets, or querying the Wiki to retrieve tes
           
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
 <p class="logo">
   <a href="index.html">
-    <img class="logo" src="_static/logo.svg" alt="Logo"/>
+    <img class="logo" src="_static/logo.svg" alt="Logo" />
     
     <h1 class="logo logo-name">bodhi</h1>
     
@@ -884,11 +885,11 @@ determine the titles on associated tickets, or querying the Wiki to retrieve tes
 
 <h3>Navigation</h3>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="user/automatic_updates.html">Automatic Updates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/buildroot_overrides.html">Buildroot Overrides</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/fedora-flavored-markdown.html">Fedora-Flavored Markdown</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user/testing.html">Testing updates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user/update_states.html">Update states</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user/buildroot_overrides.html">Buildroot Overrides</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user/automatic_updates.html">Automatic Updates</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user/fedora-flavored-markdown.html">Fedora-Flavored Markdown</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="user/release_notes.html">Release notes</a></li>
@@ -900,9 +901,8 @@ determine the titles on associated tickets, or querying the Wiki to retrieve tes
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="developer/index.html">Developer documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/releases.html">Release process</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer/vagrant.html">Vagrant</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer/vagrant_vscode.html">Debugging with Visual Studio Code</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer/virtualenv.html">Virtualenv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/bcd.html">BCD - the Bodhi Container Development environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/bcd_vscode.html">Debugging with Visual Studio Code</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/models.html">Database models</a></li>
 </ul>
 <ul class="current">
@@ -922,7 +922,7 @@ determine the titles on associated tickets, or querying the Wiki to retrieve tes
   </ul></li>
 </ul>
 </div>
-<div id="searchbox" style="display: none" role="search">
+<search id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
@@ -930,7 +930,7 @@ determine the titles on associated tickets, or querying the Wiki to retrieve tes
       <input type="submit" value="Go" />
     </form>
     </div>
-</div>
+</search>
 <script>document.getElementById('searchbox').style.display = "block"</script>
 
 
@@ -945,11 +945,11 @@ determine the titles on associated tickets, or querying the Wiki to retrieve tes
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2007-2023, Red Hat, Inc..
+      &#169;2007-2026, Red Hat, Inc..
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
       
       |
       <a href="_sources/administration.rst.txt"
